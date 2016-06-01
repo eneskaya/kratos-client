@@ -3,7 +3,7 @@
 @section('content')
 
     <div class="row">
-        <div class="col-md-4">
+        <div class="col-md-6">
             <h4>Open games</h4>
             <small class="text-muted">Service URL: {{ env('GAME_SERVICE') }}</small>
             <hr>
@@ -11,16 +11,15 @@
                 No games currently.
             @endif
             <ul>
+
                 @foreach($games as $game)
                     <li>
-                        {{ $game }}
-                        <a href="{{ url($game) }}">Show game</a>
+                        {{ $game["id"]}} <a class="btn btn-default btn-xs" href="{{ url($game["id"]) }}">Show Game</a>
                     </li>
-
                 @endforeach
             </ul>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-6">
             <h4>Users</h4>
             <small class="text-muted">Service URL: {{ env('USER_SERVICE') }}</small>
             <hr>

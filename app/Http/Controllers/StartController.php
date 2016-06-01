@@ -19,7 +19,7 @@ class StartController extends Controller
 
     public function start()
     {
-        $games = collect($this->getOpenGames());
+        $games = collect($this->getOpenGames()["games"]);
         $users = collect($this->getUsers());
         return view('welcome')->with(compact('games', 'users'));
     }
