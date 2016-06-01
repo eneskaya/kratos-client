@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use GuzzleHttp\Exception\BadResponseException;
 use Illuminate\Http\Request;
 use GuzzleHttp\Client;
 use App\Http\Requests;
@@ -18,26 +19,41 @@ class StartController extends Controller
 
     public function start()
     {
-        $users = $this->getUsers();
-
-        return view('welcome');
+        $games = collect($this->getOpenGames());
+        $users = collect($this->getUsers());
+        return view('welcome')->with(compact('games', 'users'));
     }
 
-    /**
-     * Get all users.
-     *
-     * @return mixed
-     */
-    private function getUsers()
+    public function getOpenGames()
     {
-        // users endpoint for ...
-        $res = $this->client->request('GET', 'http://example.com', [
-           'auth' => [ config('app.api.user'), config('app.api.password') ]
+        $uri = env('GAME_SERVICE');
+        $res = $this->client->request('GET', $uri . '/games', [
+            'headers' => [
+                'Content-Type' => 'application/json'
+            ]
         ]);
 
-        $data = json_decode($res->getBody()->getContents());
-        $users = new Collection($data);
+        if ($res->getStatusCode() == 200) {
+            return json_decode($res->getBody()->getContents(), true);
+        }
 
-        return $users;
+        throw new BadResponseException('Could not connect to server', $res);
     }
+
+    public function getUsers()
+    {
+        $uri = env('USER_SERVICE');
+        $res = $this->client->request('GET', $uri, [
+            'headers' => [
+                'Content-Type' => 'application/json'
+            ]
+        ]);
+
+        if ($res->getStatusCode() == 200) {
+            return json_decode($res->getBody()->getContents(), true);
+        }
+
+        throw new BadResponseException('Could not connect to server', $res);
+    }
+
 }
