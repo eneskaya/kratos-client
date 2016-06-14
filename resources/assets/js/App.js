@@ -6,12 +6,11 @@ import io from 'socket.io-client';
 export default class App extends Component {
     constructor(props) {
         super(props);
-        const socket = io('http://192.168.10.10:3000');
 
+        const socket = io('http://172.18.0.57:3000');
         socket.on('test:something-happened', function(msg){
             alert(msg);
         });
-
     }
 
     render() {
