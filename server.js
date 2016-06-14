@@ -1,15 +1,17 @@
-var app = require('express')();
 var server = require('http').Server(app);
 var io = require('socket.io')(server);
-
-server.listen(3000);
+var redis = require('ioredis');
+redis = new Redis();
 
 console.log("Listening on http://localhost:3000");
 
-app.get('/', function (request, response) {
-    response.sendStatus(200);
+redis.on('message', function (channel, message) {
+    message = JSON.parse(message);
+    io.emit(channel + ':' + message.event, message.data);
 });
 
 io.on('connection', function( socket ) {
    console.log('A connection was made!', socket);
 });
+
+server.listen(3000);
