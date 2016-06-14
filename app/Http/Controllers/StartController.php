@@ -26,12 +26,23 @@ class StartController extends Controller
 
     public function getInitialData()
     {
+        if (Cache::has("initialdata")) {
+            return Cache::get("initialdata");
+        }
+
         $games = collect($this->getOpenGames());
         $users = collect($this->getUsers());
-        return collect([
+        $events = collect($this->getEvents());
+
+        $response = collect([
             "games" => $games,
-            "users" => $users
+            "users" => $users,
+            "events" => $events
         ]);
+
+        Cache::put("initialdata", $response, 60);
+
+        return $response;
     }
 
     public function getOpenGames()
@@ -53,6 +64,22 @@ class StartController extends Controller
     public function getUsers()
     {
         $uri = Cache::get('KRATOSUserService');
+        $res = $this->client->request('GET', $uri, [
+            'headers' => [
+                'Content-Type' => 'application/json'
+            ]
+        ]);
+
+        if ($res->getStatusCode() == 200) {
+            return json_decode($res->getBody()->getContents(), true);
+        }
+
+        throw new BadResponseException('Could not connect to server', $res);
+    }
+
+    public function getEvents()
+    {
+        $uri = Cache::get('KRATOSEventService');
         $res = $this->client->request('GET', $uri, [
             'headers' => [
                 'Content-Type' => 'application/json'

@@ -1,22 +1,21 @@
 import React, { Component } from 'react';
-import getMuiTheme from 'material-ui/styles/getMuiTheme';
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import ReactDOM from 'react-dom';
 import App from './App';
+import Game from './Game';
+
+import { Router, Route, Link, hashHistory } from 'react-router'
 
 var injectTapEventPlugin = require("react-tap-event-plugin");
 injectTapEventPlugin();
 
-const muiTheme = getMuiTheme({
-
-});
-
 class Root extends Component {
     render() {
         return (
-            <MuiThemeProvider muiTheme={muiTheme}>
-                <App />
-            </MuiThemeProvider>
+          <Router history={hashHistory}>
+            <Route path="/" component={App}>
+              <Route path="/games/:gameId" component={Game} />
+            </Route>
+          </Router>
         );
     }
 }

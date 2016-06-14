@@ -13,7 +13,7 @@ io.on("connection", function( socket ) {
 
 var pub = new Redis();
 
-redis.subscribe('test', 'users', 'games', function (err, count) {
+redis.subscribe('users', 'games', 'event', function (err, count) {
 });
 
 redis.on('message', function (channel, message) {
