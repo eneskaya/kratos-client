@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use GuzzleHttp\Client;
 use App\Http\Requests;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Cache;
 
 class StartController extends Controller
 {
@@ -35,7 +36,7 @@ class StartController extends Controller
 
     public function getOpenGames()
     {
-        $uri = env('GAME_SERVICE');
+        $uri = Cache::get('KRATOSGameService');
         $res = $this->client->request('GET', $uri, [
             'headers' => [
                 'Content-Type' => 'application/json'
@@ -51,7 +52,7 @@ class StartController extends Controller
 
     public function getUsers()
     {
-        $uri = env('USER_SERVICE');
+        $uri = Cache::get('KRATOSUserService');
         $res = $this->client->request('GET', $uri, [
             'headers' => [
                 'Content-Type' => 'application/json'
