@@ -2,12 +2,13 @@ import React, { Component } from 'react';
 import AppBar from 'material-ui/AppBar';
 import {Tabs, Tab} from 'material-ui/Tabs';
 import io from 'socket.io-client';
+import env from './env';
 
 export default class App extends Component {
     constructor(props) {
         super(props);
 
-        const socket = io('http://192.168.10.10:3000');
+        const socket = io(env);
         socket.on('test:something-happened', function(msg){
             alert(msg);
         });
