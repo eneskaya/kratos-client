@@ -7,11 +7,24 @@ var redis = new Redis();
 console.log("Listening on http://localhost:3000");
 server.listen(3000);
 
-redis.on("message", function (channel, message) {
-    message = JSON.parse(message);
-    io.emit(channel + ':' + message.event, message.data);
+io.on("connection", function( socket ) {
+    console.log('A connection was made!', socket.id);
 });
 
-io.on("connection", function( socket ) {
-   console.log('A connection was made!', socket.id);
+var pub = new Redis();
+
+redis.subscribe('test', 'users', 'games', function (err, count) {
+});
+
+redis.on('message', function (channel, message) {
+    console.log('Receive message %s from channel %s', message, channel);
+
+    try {
+        message = JSON.parse(message);
+        console.log(message);
+    } catch (e) {
+        console.log(e);
+    }
+
+    io.emit(channel + ':' + message.event, message.data);
 });
