@@ -1,4 +1,4 @@
-var server = require('http').Server(app);
+var server = require('http').Server();
 var io = require('socket.io')(server);
 var redis = require('ioredis');
 redis = new Redis();
