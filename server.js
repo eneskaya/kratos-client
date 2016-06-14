@@ -1,7 +1,8 @@
 var server = require('http').Server();
 var io = require('socket.io')(server);
-var redis = require('ioredis');
-redis = new Redis();
+var Redis = require('ioredis');
+var redis = new Redis();
+
 
 console.log("Listening on http://localhost:3000");
 
