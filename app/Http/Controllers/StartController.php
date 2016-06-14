@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\SomeEvent;
 use GuzzleHttp\Exception\BadResponseException;
 use Illuminate\Http\Request;
 use GuzzleHttp\Client;
