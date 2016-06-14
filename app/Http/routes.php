@@ -12,7 +12,6 @@
 */
 
 Route::get('/', 'StartController@start');
-Route::get('users/create', 'UserController@showForm');
-Route::post('users/create', 'UserController@createUser');
 
+Route::get('initial', 'StartController@getInitialData');
 Route::get('games/{gameId}', 'GameController@showGame');

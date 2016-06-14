@@ -3,7 +3,6 @@ var io = require('socket.io')(server);
 var Redis = require('ioredis');
 var redis = new Redis();
 
-
 console.log("Listening on http://localhost:3000");
 
 redis.on('message', function (channel, message) {

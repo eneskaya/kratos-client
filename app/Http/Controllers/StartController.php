@@ -19,15 +19,23 @@ class StartController extends Controller
 
     public function start()
     {
-        $games = collect($this->getOpenGames()["games"]);
+        return view('welcome');
+    }
+
+    public function getInitialData()
+    {
+        $games = collect($this->getOpenGames());
         $users = collect($this->getUsers());
-        return view('welcome')->with(compact('games', 'users'));
+        return collect([
+            "games" => $games,
+            "users" => $users
+        ]);
     }
 
     public function getOpenGames()
     {
         $uri = env('GAME_SERVICE');
-        $res = $this->client->request('GET', $uri . '/games', [
+        $res = $this->client->request('GET', $uri, [
             'headers' => [
                 'Content-Type' => 'application/json'
             ]
