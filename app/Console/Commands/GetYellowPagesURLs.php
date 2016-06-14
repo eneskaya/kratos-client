@@ -5,6 +5,7 @@ namespace App\Console\Commands;
 use GuzzleHttp\Client;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Redis;
 
 class GetYellowPagesURLs extends Command
@@ -47,20 +48,33 @@ class GetYellowPagesURLs extends Command
     public function handle()
     {
         $this->info('Getting URLs from service...');
-        $this->info('KRATOSGameService' . $this->getServiceUrl('KRATOSGameService'));
-        $this->info('KRATOSUserService' . $this->getServiceUrl('KRATOSUserService'));
-        $this->info('KRATOSEventsService' . $this->getServiceUrl('KRATOSEventsService'));
+        $this->getServiceUrl('KRATOSGameService');
+        $this->getServiceUrl('KRATOSUserService');
+        $this->getServiceUrl('KRATOSEventService');
+        $this->getServiceUrl('KRATOSDiceService');
+        $this->info('DONE.');
     }
 
     private function getServiceUrl($serviceName)
     {
-        $request = $this->client->request('GET', "services/of/name/$serviceName");
-        $response = \GuzzleHttp\json_decode($request->getBody()->getContents());
+        try {
+            $request = $this->client->request('GET', "services/of/name/$serviceName");
+            $response = \GuzzleHttp\json_decode($request->getBody()->getContents());
 
-        $request = $this->client->request('GET', $response->services[0]);
-        $response = \GuzzleHttp\json_decode($request->getBody()->getContents());
+            $request = $this->client->request('GET', $response->services[0]);
+            $response = \GuzzleHttp\json_decode($request->getBody()->getContents());
 
-        Cache::put($serviceName, $response->uri, 1440);
-        return $response->uri;
+            $this->info("$serviceName: $response->uri");
+            Cache::put($serviceName, $response->uri, 1440);
+            return $response->uri;
+
+        } catch (\Exception $e) {
+            $this->warn('Something went wrong getting the ' . $serviceName . ' URL!');
+
+            Log::error('GetYellowPagesURLs error getting ' . $serviceName);
+            Log::error($e->getMessage());
+            Log::error($e->getTraceAsString());
+            return '';
+        }
     }
 }

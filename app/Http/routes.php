@@ -14,12 +14,8 @@
 use App\Events\SomeEvent;
 
 Route::get('/', 'StartController@start');
-
 Route::get('initial', 'StartController@getInitialData');
-Route::get('games/{gameId}', 'GameController@showGame');
+Route::get('games/{gameId}', 'GameController@getGame');
 
-Route::get('test', function () {
-    event(new SomeEvent());
-
-    return "DONE";
-});
+Route::post('client/turn', 'ClientController@announceTurn');
+Route::post('client/event', 'ClientController@announceEvent');
