@@ -72,14 +72,14 @@ export default class App extends Component {
                     <List>
                       <Subheader>Games</Subheader>
                       { this.state.games.map( function(game) {
-                        return <Link to={game}><ListItem primaryText={game} rightIcon={<PlayButton />} /></Link>
+                        return <Link to={game} key={game}><ListItem primaryText={game} rightIcon={<PlayButton />} /></Link>
                       }) }
                     </List>
                     <Divider />
                     <List>
                       <Subheader>Users</Subheader>
                       { this.state.users.map( function(user) {
-                        return <ListItem primaryText={user} leftIcon={<Identity />} />
+                        return <ListItem key={user} primaryText={user} leftIcon={<Identity />} />
                       }) }
                     </List>
                   </div>
