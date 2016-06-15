@@ -16,7 +16,6 @@ Route::get('initial', 'StartController@getInitialData');
 Route::get('games/{gameId}', 'GameController@getGame');
 
 Route::post('client/login', 'ClientController@loginAsUser');
-Route::get('client/login', 'ClientController@loggedIn');
 
 Route::post('client/turn', 'ClientController@announceTurn');
 Route::post('client/event', 'ClientController@announceEvent');

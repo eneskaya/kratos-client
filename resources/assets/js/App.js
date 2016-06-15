@@ -65,7 +65,7 @@ export default class App extends Component {
               <AppBar title="KRATOS Restopoly" iconElementLeft={<IconButton><Extension /></IconButton>}/>
 
               <div className="container-fluid row" style={{marginTop: 10}}>
-                <div className="col-sm-4">
+                <div>
                   <h4>Overview</h4>
 
                   <LinearProgress mode="determinate" value={this.state.progress} />
@@ -85,16 +85,7 @@ export default class App extends Component {
                     </List>
                   </div>
                 </div>
-                <div className="col-sm-8">
-                  {this.props.children}
-                </div>
               </div>
-
-              <Snackbar
-                open={this.state.socketOpen}
-                message="Socket connection established."
-                autoHideDuration={4000}
-              />
 
             </div>
 

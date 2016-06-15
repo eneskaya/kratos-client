@@ -71,7 +71,7 @@ class Start extends Component {
         response.json().then( (data) => {
           localStorage.setItem('user', data.player);
           localStorage.setItem('game', data.game);
-          hashHistory.push('/play');
+          hashHistory.push('/play' + data.game);
         });
       }
     });

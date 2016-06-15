@@ -15,10 +15,9 @@ class Root extends Component {
         return (
           <Router history={hashHistory}>
             <Route path="/" component={Start}/>
+
             <Route path="/play" component={Play}>
-            </Route>
-            <Route path="/overview" component={App}>
-              <Route path="/games/:gameId" component={Game} />
+              <Route path="/play/games/:gameId" component={Game} />
             </Route>
           </Router>
         );
