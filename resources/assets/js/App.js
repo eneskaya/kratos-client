@@ -48,6 +48,7 @@ export default class App extends Component {
     initialize() {
         fetch('/initial').then( (response) => {
             response.json().then( (data) => {
+                console.log(data);
                 this.setState({
                     users: data.users,
                     games: data.games,

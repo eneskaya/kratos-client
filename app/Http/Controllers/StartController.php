@@ -45,52 +45,40 @@ class StartController extends Controller
         return $response;
     }
 
-    public function getOpenGames()
+    private function getOpenGames()
     {
-        $uri = Cache::get('KRATOSGameService');
-        $res = $this->client->request('GET', $uri, [
-            'headers' => [
-                'Content-Type' => 'application/json'
-            ]
-        ]);
-
-        if ($res->getStatusCode() == 200) {
-            return json_decode($res->getBody()->getContents(), true);
-        }
-
-        throw new BadResponseException('Could not connect to server', $res);
+        $this->getDataForService('KRATOSGameService');
     }
 
-    public function getUsers()
+    private function getUsers()
     {
-        $uri = Cache::get('KRATOSUserService');
-        $res = $this->client->request('GET', $uri, [
-            'headers' => [
-                'Content-Type' => 'application/json'
-            ]
-        ]);
-
-        if ($res->getStatusCode() == 200) {
-            return json_decode($res->getBody()->getContents(), true);
-        }
-
-        throw new BadResponseException('Could not connect to server', $res);
+        $this->getDataForService('KRATOSUserService');
     }
 
-    public function getEvents()
+    private function getEvents()
     {
-        $uri = Cache::get('KRATOSEventService');
-        $res = $this->client->request('GET', $uri, [
-            'headers' => [
-                'Content-Type' => 'application/json'
-            ]
-        ]);
+        return $this->getDataForService('KRATOSEventService');
+    }
 
-        if ($res->getStatusCode() == 200) {
-            return json_decode($res->getBody()->getContents(), true);
+    private function getDataForService($service)
+    {
+        if (Cache::has($service)) {
+            $uri = Cache::get($service);
+
+            $res = $this->client->request('GET', $uri, [
+                'headers' => [
+                    'Content-Type' => 'application/json'
+                ]
+            ]);
+
+            if ($res->getStatusCode() == 200) {
+                return json_decode($res->getBody()->getContents(), true);
+            }
+
+            throw new BadResponseException('Could not connect to server', $res);
         }
 
-        throw new BadResponseException('Could not connect to server', $res);
+        return [];
     }
 
 }
