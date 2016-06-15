@@ -26,10 +26,6 @@ class StartController extends Controller
 
     public function getInitialData()
     {
-        if (Cache::has("initialdata")) {
-            return Cache::get("initialdata");
-        }
-
         $games = collect($this->getOpenGames());
         $users = collect($this->getUsers());
         $events = collect($this->getEvents());
@@ -40,19 +36,19 @@ class StartController extends Controller
             "events" => $events
         ]);
 
-        Cache::put("initialdata", $response, 60);
-
+        Cache::put('initialdata', $response, 5);
+        
         return $response;
     }
 
     private function getOpenGames()
     {
-        $this->getDataForService('KRATOSGameService');
+        return $this->getDataForService('KRATOSGameService');
     }
 
     private function getUsers()
     {
-        $this->getDataForService('KRATOSUserService');
+        return $this->getDataForService('KRATOSUserService');
     }
 
     private function getEvents()
@@ -71,7 +67,7 @@ class StartController extends Controller
                 ]
             ]);
 
-            if ($res->getStatusCode() == 200) {
+            if ($res->getStatusCode() === 200) {
                 return json_decode($res->getBody()->getContents(), true);
             }
 

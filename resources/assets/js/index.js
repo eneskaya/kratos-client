@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import App from './App';
 import Game from './Game';
 import Start from './Start';
+import Play from './Play';
 
 import { Router, Route, Link, hashHistory } from 'react-router'
 
@@ -14,6 +15,8 @@ class Root extends Component {
         return (
           <Router history={hashHistory}>
             <Route path="/" component={Start}/>
+            <Route path="/play" component={Play}>
+            </Route>
             <Route path="/overview" component={App}>
               <Route path="/games/:gameId" component={Game} />
             </Route>

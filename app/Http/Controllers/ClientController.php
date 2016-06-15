@@ -7,19 +7,9 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Facades\Session;
 
 class ClientController extends Controller
 {
-
-    public function loggedIn()
-    {
-        return [
-            'current_player' => session('current_player'),
-            'joined_game' => session('joined_game')
-        ];
-    }
-
     public function loginAsUser(Request $request)
     {
         $this->validate($request, [
@@ -30,15 +20,10 @@ class ClientController extends Controller
         $initialData = collect(Cache::get('initialdata'));
 
         $players = $initialData->get('users');
-
         $games = $initialData->get('games');
-        $players->search($request->input('player'));
 
         if ($players->contains($request->input('player'))
             && $games->contains($request->input('game'))) {
-
-            session('current_player', $request->input('player'));
-            session('joined_game', $request->input('game'));
 
             return response($request->all(), 200);
         }
