@@ -13,8 +13,7 @@ io.on("connection", function( socket ) {
 
 var pub = new Redis();
 
-redis.subscribe('users', 'games', 'event', function (err, count) {
-});
+redis.subscribe('users', 'games', 'event');
 
 redis.on('message', function (channel, message) {
     console.log('Receive message %s from channel %s', message, channel);
