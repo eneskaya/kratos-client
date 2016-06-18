@@ -19,8 +19,8 @@ Route::group([ 'prefix' => 'games' ], function () {
 });
 
 Route::group([ 'prefix' => 'client' ], function () {
-    Route::post('{user}', 'ClientController@announceUserEvent');
     Route::post('login', 'ClientController@loginAsUser');
     Route::post('turn', 'ClientController@announceTurn');
     Route::post('event', 'ClientController@announceEvent');
+    Route::post('{user}', 'ClientController@announceUserEvent');
 });
