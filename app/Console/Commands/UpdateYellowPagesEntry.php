@@ -46,7 +46,9 @@ class UpdateYellowPagesEntry extends Command
             'KRATOSEventService',
             'KRATOSGameService',
             'KRATOSUserService',
-            'KRATOSDiceService'
+            'KRATOSDiceService',
+            'KRATOSBoardService',
+            'KRATOSBankService'
         ]);
 
         if ($this->confirm('Do you wish to delete ALL old services first? [y|N]')) {
@@ -131,6 +133,18 @@ class UpdateYellowPagesEntry extends Command
                 return [
                     'type' => 'dice',
                     'description' => 'Dice Service for KRATOS'
+                ];
+
+            case 'KRATOSBoardService':
+                return [
+                    'type' => 'board',
+                    'description' => 'Board Service for KRATOS'
+                ];
+
+            case 'KRATOSBankService':
+                return [
+                    'type'  => 'bank',
+                    'description'   => 'Bank Service for KRATOS'
                 ];
         }
 
