@@ -10,16 +10,16 @@ class NewEventHasBeenAdded extends Event implements ShouldBroadcast
 {
     use SerializesModels;
     
-    public $eventPayload;
+    public $payload;
 
     /**
      * Create a new event instance.
      *
-     * @param $eventPayload
+     * @param $payload
      */
-    public function __construct($eventPayload)
+    public function __construct($payload)
     {
-        $this->eventPayload = $eventPayload;
+        $this->payload = $payload;
     }
 
     /**
