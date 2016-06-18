@@ -48,10 +48,14 @@ class GetYellowPagesURLs extends Command
     public function handle()
     {
         $this->info('Getting URLs from service...');
+        
         $this->getServiceUrl('KRATOSGameService');
         $this->getServiceUrl('KRATOSUserService');
         $this->getServiceUrl('KRATOSEventService');
         $this->getServiceUrl('KRATOSDiceService');
+        $this->getServiceUrl('KRATOSBankService');
+        $this->getServiceUrl('KRATOSBoardService');
+
         $this->info('DONE.');
     }
 
