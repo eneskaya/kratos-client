@@ -13,9 +13,15 @@
 
 Route::get('/', 'StartController@start');
 Route::get('initial', 'StartController@getInitialData');
-Route::get('games/{gameId}', 'GameController@getGame');
 
-Route::post('client/login', 'ClientController@loginAsUser');
+Route::group([ 'prefix' => 'games' ], function () {
+    Route::post('/', 'GameController@createNewGame');
+    Route::get('{gameId}', 'GameController@getGame');
+});
 
-Route::post('client/turn', 'ClientController@announceTurn');
-Route::post('client/event', 'ClientController@announceEvent');
+Route::group([ 'prefix' => 'client' ], function () {
+    Route::post('{user}', 'ClientController@announceUserEvent');
+    Route::post('login', 'ClientController@loginAsUser');
+    Route::post('turn', 'ClientController@announceTurn');
+    Route::post('event', 'ClientController@announceEvent');
+});

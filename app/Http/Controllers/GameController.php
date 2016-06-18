@@ -27,4 +27,14 @@ class GameController extends Controller
         Cache::put("game:$gameId", $game, 60);
         return $game;
     }
+
+    public function createNewGame(Request $request)
+    {
+        $this->validate($request, [
+            'name' => 'required',
+            'services' => 'required|array'
+        ]);
+
+        //
+    }
 }

@@ -34,7 +34,8 @@ class ClientController extends Controller
     public function announceTurn(Request $request)
     {
         $this->validate($request, [
-            'player' => 'required'
+            'player' => 'required',
+            'game' => 'required'
         ]);
 
         // TODO announce logic and broadcast to the currently logged in user
@@ -50,5 +51,10 @@ class ClientController extends Controller
         event(new NewEventHasBeenAdded($event));
 
         return response("OK", 200);
+    }
+
+    public function announceUserEvent(Request $request)
+    {
+
     }
 }
