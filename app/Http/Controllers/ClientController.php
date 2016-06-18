@@ -43,14 +43,10 @@ class ClientController extends Controller
 
     public function announceEvent(Request $request)
     {
-        $this->validate($request, [
-            'payload'   => 'required'
-        ]);
-
-        $event = $request->input('payload');
+        $event = $request->all();
         event(new NewEventHasBeenAdded($event));
 
-        return response("OK", 200);
+        return response(["success" => true], 200);
     }
 
     public function announceUserEvent(Request $request)

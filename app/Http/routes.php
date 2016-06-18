@@ -15,7 +15,6 @@ Route::get('/', 'StartController@start');
 Route::get('initial', 'StartController@getInitialData');
 
 Route::group([ 'prefix' => 'games' ], function () {
-    Route::post('/', 'GameController@createNewGame');
     Route::get('{gameId}', 'GameController@getGame');
 });
 

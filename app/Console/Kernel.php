@@ -2,6 +2,7 @@
 
 namespace App\Console;
 
+use App\Console\Commands\CreateNewGame;
 use App\Console\Commands\GetYellowPagesURLs;
 use App\Console\Commands\UpdateYellowPagesEntry;
 use Illuminate\Console\Scheduling\Schedule;
@@ -16,7 +17,8 @@ class Kernel extends ConsoleKernel
      */
     protected $commands = [
         GetYellowPagesURLs::class,
-        UpdateYellowPagesEntry::class
+        UpdateYellowPagesEntry::class,
+        CreateNewGame::class
     ];
 
     /**

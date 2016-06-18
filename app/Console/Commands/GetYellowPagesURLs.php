@@ -55,6 +55,7 @@ class GetYellowPagesURLs extends Command
         $this->getServiceUrl('KRATOSDiceService');
         $this->getServiceUrl('KRATOSBankService');
         $this->getServiceUrl('KRATOSBoardService');
+        $this->getServiceUrl('KRATOSBrokerService');
 
         $this->info('DONE.');
     }

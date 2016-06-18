@@ -3,7 +3,7 @@
   "scripts": {
     "prod": "gulp --production",
     "dev": "webpack-dev-server --progress --profile --colors --hot",
-    "watch": "NODE_ENV=production webpack -p --watch --config webpack.production.config.js --progress --profile --colors",
+    "watch": "NODE_ENV=development webpack -p --watch --config webpack.production.config.js --progress --profile --colors",
     "build": "NODE_ENV=production webpack -p --config webpack.production.config.js --progress --profile --colors",
     "server": "node server.js"
   },

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
 import Game from './Game';
+
 import Start from './Start';
 import Play from './Play';
 
