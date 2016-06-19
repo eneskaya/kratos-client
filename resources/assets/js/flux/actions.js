@@ -11,7 +11,8 @@ export const Actions = {
   GAME_STATUS_CHANGED : 'GAME_STATUS_CHANGED',
   PLAYER_READY_CHANGED : 'PLAYER_READY_CHANGED',
   PLAYER_ADDED: 'PLAYER_ADDED',
-  GAME_NAME_CHANGED: 'GAME_NAME_CHANGED'
+  GAME_NAME_CHANGED: 'GAME_NAME_CHANGED',
+  EVENT_ADDED: 'EVENT_ADDED'
 };
 
 /*
@@ -19,7 +20,7 @@ export const Actions = {
  */
 
 export function addPlayerToGame(player) {
-  return { type: Actions.PLAYER_ADDED, player, game }
+  return { type: Actions.PLAYER_ADDED, player }
 }
 
 export function changeTurn(player) {
@@ -39,13 +40,17 @@ export function playerBoughtAStreet(player, street) {
 }
 
 export function changeGameStatus(status) {
-  return { type: Actions.PLAYER_POSITION_CHANGED, status }
+  return { type: Actions.GAME_STATUS_CHANGED, status }
 }
 
 export function changeGameName(name) {
-  return { type: Actions.PLAYER_POSITION_CHANGED, name }
+  return { type: Actions.GAME_NAME_CHANGED, name }
 }
 
 export function changePlayerReadyStatus(player, status) {
-  return { type: Actions.PLAYER_POSITION_CHANGED, player, status }
+  return { type: Actions.PLAYER_READY_CHANGED, player, status }
+}
+
+export function addEvent(event) {
+  return { type: Actions.EVENT_ADDED, event }
 }

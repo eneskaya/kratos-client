@@ -12,7 +12,7 @@ class Pawn extends Component {
     return (
       <ListItem
         primaryText={this.props.playerName}
-        secondaryText={this.props.balance}
+        secondaryText={'Balance: ' + this.props.balance}
         leftAvatar={this.ready()}
         rightAvatar={this.turn()} />
     );

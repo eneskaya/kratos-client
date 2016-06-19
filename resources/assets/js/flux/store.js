@@ -1,11 +1,6 @@
 import { createStore } from 'redux'
-import gameApp from './reducer'
+import gameApp, { initialState } from './reducer'
 
-const initialState = {
-  status: 'unkown',
-  players: [],
-  services: [],
-  name: 'none'
-};
+const store = createStore(gameApp, initialState, window.devToolsExtension && window.devToolsExtension());
 
-export const store = createStore(gameApp, initialState, window.devToolsExtension && window.devToolsExtension());
+export default store;
