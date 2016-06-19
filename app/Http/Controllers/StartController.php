@@ -26,6 +26,19 @@ class StartController extends Controller
 
     public function getInitialData()
     {
+        
+        return [
+            'games' => [
+              '/games/testspielxy02'
+            ],
+            'users' => [
+                '/users/finn',
+                '/users/enes',
+                '/users/jakob',
+                '/users/niko'
+            ]
+        ];
+        
         $games = collect($this->getOpenGames());
         $users = collect($this->getUsers());
         $events = collect($this->getEvents());

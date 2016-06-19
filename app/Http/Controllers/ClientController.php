@@ -18,6 +18,8 @@ class ClientController extends Controller
             'game'      => 'required'
         ]);
 
+        return response($request->all(), 200);
+
         $initialData = collect(Cache::get('initialdata'));
 
         $players = $initialData->get('users');

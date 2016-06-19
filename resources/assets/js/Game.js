@@ -4,6 +4,11 @@ import CircularProgress from 'material-ui/CircularProgress';
 import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
 import FlatButton from 'material-ui/FlatButton';
 import Snackbar from 'material-ui/Snackbar';
+import PlayersList from './components/PlayersList';
+
+import AccountCircle from 'material-ui/svg-icons/action/account-circle';
+import {grey800, greenA200} from 'material-ui/styles/colors';
+
 
 import io from 'socket.io-client';
 import env from './env';
@@ -16,9 +21,24 @@ class Game extends Component {
 
     this.state = {
       socketOpen: false,
-      data: {
+      game: {
         id: 0,
         status: "unkown",
+        players: [
+          {
+            name : "enes",
+            ready: false
+          },
+          {
+            name : "finn",
+            ready: true
+          },
+          {
+            name : "jakob",
+            ready: false
+          }
+        ],
+        name: "testspielxy02"
       },
       loading: true
     };
@@ -26,11 +46,11 @@ class Game extends Component {
 
   initialize() {
 
-    fetch(`/games/${this.props.params.gameId}`).then( (response) => {
-        response.json().then( (data) => {
-          this.setState({ data });
-        });
-    });
+    // fetch(`/games/${this.props.params.gameId}`).then( (response) => {
+    //     response.json().then( (data) => {
+    //       this.setState({ game: data });
+    //     });
+    // });
 
     let socket = io(env);
 
@@ -40,11 +60,56 @@ class Game extends Component {
       });
     });
 
-    socket.on('event:added', (message) => {
-      console.log(message);
-      //
+    socket.on('event:added', (event) => {
+      this.broadcastEvent(event);
     });
 
+  }
+
+  broadcastEvent(event) {
+    
+    // id of the current game
+    let game = this.state.game.name;
+
+    // id of the current player
+    let player = this.state.game.player;
+
+    // check relevancy of event
+    if (game === event.game) {
+      switch (event.type) {
+
+        case 'dice_roll':
+
+          break;
+
+        case 'account_balance_changed':
+
+          break;
+
+        case 'player_position_changed':
+
+          break;
+
+        case 'turn_changed':
+
+          break;
+
+        case 'player_bought_street':
+
+          break;
+
+        case 'game_status_changed':
+
+          break;
+
+        case 'player_ready_changed':
+
+          break;
+
+        default:
+          break;
+      }
+    }
   }
 
   render() {
@@ -53,19 +118,18 @@ class Game extends Component {
         <div className="row">
           <div className="col-sm-8">
             <h4>Game: {this.props.params.gameId}</h4>
-            <small className="text-muted">In {this.state.data.id} as {localStorage.getItem('user')}</small>
+            <small className="text-muted">In {this.state.game.id} as {localStorage.getItem('user')}</small>
           </div>
           <div className="col-sm-4">
-            <span className="text-muted pull-right">Status: {this.state.data.status}</span>
+            <span className="text-muted pull-right">Status: {this.state.game.status}</span>
           </div>
         </div>
-
-        <Snackbar
-          open={this.state.socketOpen}
-          message="Socket connection established."
-          autoHideDuration={4000}
-        />
-
+        <hr />
+        <div className="row">
+          <div className="col-sm-4">
+            <PlayersList players={this.state.game.players} />
+          </div>
+        </div>
       </div>
     );
   }

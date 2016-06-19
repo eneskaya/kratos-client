@@ -12,10 +12,6 @@ class GameController extends Controller
 {
     public function getGame($gameId)
     {
-        if (Cache::has("game:$gameId")) {
-            return Cache::get("game:$gameId");
-        }
-
         $client = new Client();
         $res = $client->request('GET', Cache::get('KRATOSGameService') . '/' . $gameId);
 
@@ -24,7 +20,6 @@ class GameController extends Controller
         }
 
         $game = json_decode($res->getBody()->getContents(), true);
-        Cache::put("game:$gameId", $game, 60);
         return $game;
     }
 
