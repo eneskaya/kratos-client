@@ -4,13 +4,15 @@ import AccountCircle from 'material-ui/svg-icons/action/account-circle';
 import Star from 'material-ui/svg-icons/action/stars';
 import {deepOrange300, greenA200, amber300, grey500} from 'material-ui/styles/colors';
 
+// A pawn is a player/user in the game
+
 class Pawn extends Component {
 
   render() {
     return (
       <ListItem
         primaryText={this.props.playerName}
-        secondaryText={this.balance()}
+        secondaryText={this.props.balance}
         leftAvatar={this.ready()}
         rightAvatar={this.turn()} />
     );
@@ -30,17 +32,13 @@ class Pawn extends Component {
     }
   }
 
-  balance() {
-    // get balance here...
-    return "Balance: 0€";
-  }
-
 }
 
 Pawn.propTypes = {
   playerName: React.PropTypes.string.isRequired,
   turn: React.PropTypes.bool.isRequired,
-  ready: React.PropTypes.bool.isRequired
+  ready: React.PropTypes.bool.isRequired,
+  balance: React.PropTypes.string.isRequired
 }
 
 export default Pawn;

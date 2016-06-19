@@ -1,14 +1,11 @@
 import React, { Component } from 'react';
-import Board from 'material-ui/svg-icons/hardware/developer-board';
-import CircularProgress from 'material-ui/CircularProgress';
-import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
-import FlatButton from 'material-ui/FlatButton';
-import Snackbar from 'material-ui/Snackbar';
 import PlayersList from './components/PlayersList';
 
 import AccountCircle from 'material-ui/svg-icons/action/account-circle';
 import {grey800, greenA200} from 'material-ui/styles/colors';
 
+import store from './flux/store.js';
+import { changeGameName } from './flux/actions';
 
 import io from 'socket.io-client';
 import env from './env';
@@ -21,6 +18,7 @@ class Game extends Component {
 
     this.state = {
       socketOpen: false,
+
       game: {
         id: 0,
         status: "unkown",
@@ -40,7 +38,11 @@ class Game extends Component {
         ],
         name: "testspielxy02"
       },
-      loading: true
+
+      status: "unknown",
+      players: [],
+      name: "",
+      services: []
     };
   }
 
@@ -48,7 +50,7 @@ class Game extends Component {
 
     // fetch(`/games/${this.props.params.gameId}`).then( (response) => {
     //     response.json().then( (data) => {
-    //       this.setState({ game: data });
+    //       this.setState({ game: data, loading: false });
     //     });
     // });
 
@@ -64,10 +66,12 @@ class Game extends Component {
       this.broadcastEvent(event);
     });
 
+    
+
   }
 
   broadcastEvent(event) {
-    
+
     // id of the current game
     let game = this.state.game.name;
 
