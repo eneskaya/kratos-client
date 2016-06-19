@@ -104,7 +104,8 @@ class CreateNewGame extends Command
         ]);
 
         if ($request->getStatusCode() === 200) {
-
+            $this->info('Game created!');
+            $this->info($request->getBody()->getContents());
         }
     }
 }
