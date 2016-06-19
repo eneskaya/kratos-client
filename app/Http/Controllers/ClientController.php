@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Events\NewEventHasBeenAdded;
+use App\Events\TurnHasBeenAnnounced;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -38,7 +39,7 @@ class ClientController extends Controller
             'game' => 'required'
         ]);
 
-        // TODO announce logic and broadcast to the currently logged in user
+        event(new TurnHasBeenAnnounced($request->input('player'), $request->input('game')));
     }
 
     public function announceEvent(Request $request)
