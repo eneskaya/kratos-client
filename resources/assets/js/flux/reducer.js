@@ -7,7 +7,7 @@ export const initialState = {
   services: [],
   name: 'none',
   ownedStreets: [],
-  gameEvents: []
+  events: []
 };
 
 /**************[HELPER FUNCTIONS]**************/
@@ -70,6 +70,26 @@ function changePosition(oldPlayers, playerWhosePositionHasChanged, newPosition) 
   return newPlayers;
 }
 
+function changeReadyStatus(oldPlayers, playerWhoseReadyStatusHasChanged, status) {
+
+  let newPlayers = [];
+
+  oldPlayers.map( (player) => {
+
+    let newPlayer = {};
+
+    if (player.name === playerWhoseReadyStatusHasChanged) {
+      newPlayer = Object.assign({}, player, { ready: status });
+    } else {
+      newPlayer = Object.assign({}, player);
+    }
+
+    newPlayers.push(newPlayer);
+  });
+
+  return newPlayers;
+}
+
 /**************[]**************/
 
 function gameApp(state = initialState, action) {
@@ -108,18 +128,16 @@ function gameApp(state = initialState, action) {
 
     case Actions.EVENT_ADDED:
       return Object.assign({}, state, {
-        gameEvents: state.gameEvents.concat(action.event)
+        events: state.events.concat(action.event)
       });
 
-    //
-    // case Actions.PLAYER_BOUGHT_STREET:
-    //   break;
-    //
-    // case Actions.GAME_STATUS_CHANGED:
-    //   break;
-    //
-    // case Actions.PLAYER_READY_CHANGED:
-    //   break;
+    case Actions.PLAYER_READY_CHANGED:
+      return Object.assign({}, state, {
+        players: changeReadyStatus(state.players, action.player, action.status)
+      });
+
+    case Actions.PLAYER_BOUGHT_STREET:
+      return state;
 
     default:
       return state;

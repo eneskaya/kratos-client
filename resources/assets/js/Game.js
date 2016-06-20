@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import PlayersList from './components/PlayersList';
-
+import EventsList from './components/EventsList';
+import PlayBar from './components/PlayBar';
 import AccountCircle from 'material-ui/svg-icons/action/account-circle';
 import {grey800, greenA200} from 'material-ui/styles/colors';
+
 
 import store from './flux/store';
 
@@ -42,6 +44,39 @@ class Game extends Component {
         });
     });
 
+    const e =   {
+        id: "/events/5jpq21ujhrd1ibo66g3osdi7f5",
+        name: "test event",
+        game: "testspiel01",
+        type: "test_event",
+        reason: "Because fuck you that's why",
+        resource: "dasdasd",
+        player: "enes",
+        submitted: true,
+        time: "2016-06-20 01:06:15",
+        valid: true,
+        payload: {
+          before: 'enes',
+          after: 'blabla'
+        }
+      };
+
+    const e2 =   {
+        id: "/events/5jpq21ujhrd1ibo66g3osdi7f6",
+        name: "test event",
+        game: "testspiel01",
+        type: "test_event",
+        reason: "Because fuck you that's why",
+        resource: "dasdasd",
+        player: "enes",
+        submitted: true,
+        time: "2016-06-20 09:06:15",
+        valid: true,
+      };
+
+    store.dispatch(addEvent(e));
+    store.dispatch(addEvent(e2));
+
     let socket = io(env);
 
     socket.on('connect', (socket) => {
@@ -53,7 +88,6 @@ class Game extends Component {
     socket.on('event:added', (event) => {
       this.broadcastEvent(event.payload);
     });
-
 
     this.unsubscribe = store.subscribe(() => {
       this.setState(store.getState());
@@ -113,6 +147,12 @@ class Game extends Component {
           <div className="col-sm-4">
             <PlayersList players={this.state.players} />
           </div>
+          <div className="col-sm-8">
+            <EventsList events={this.state.events} />
+          </div>
+        </div>
+        <div>
+          <PlayBar />
         </div>
       </div>
     );
