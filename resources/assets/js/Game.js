@@ -87,7 +87,7 @@ class Game extends Component {
           break;
 
         case 'player_ready_changed':
-          store.dispatch(changePlayerReadyStatus(event.player, event.payload.after));
+          store.dispatch(changePlayerReadyStatus(event.player));
           break;
 
         default:

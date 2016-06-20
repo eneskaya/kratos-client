@@ -47,8 +47,8 @@ export function changeGameName(name) {
   return { type: Actions.GAME_NAME_CHANGED, name }
 }
 
-export function changePlayerReadyStatus(player, status) {
-  return { type: Actions.PLAYER_READY_CHANGED, player, status }
+export function changePlayerReadyStatus(player) {
+  return { type: Actions.PLAYER_READY_CHANGED, player }
 }
 
 export function addEvent(event) {

@@ -133,7 +133,7 @@ function gameApp(state = initialState, action) {
 
     case Actions.PLAYER_READY_CHANGED:
       return Object.assign({}, state, {
-        players: changeReadyStatus(state.players, action.player, action.status)
+        players: changeReadyStatus(state.players, action.player, true)
       });
 
     case Actions.PLAYER_BOUGHT_STREET:
