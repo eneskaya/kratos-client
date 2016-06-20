@@ -38,7 +38,7 @@ class Game extends Component {
           });
 
           store.dispatch( changeGameStatus(data.status) );
-
+          store.dispatch( changeGameName(data.name) );
         });
     });
 
@@ -52,6 +52,7 @@ class Game extends Component {
 
     socket.on('event:added', (event) => {
       this.broadcastEvent(event.payload);
+      console.log(event.payload);
     });
 
     this.unsubscribe = store.subscribe(() => {
@@ -63,6 +64,7 @@ class Game extends Component {
 
     // id of the current game
     let game = this.state.name;
+    console.log(game);
 
     // id of the current player
     let player = localStorage.getItem('user');
@@ -72,23 +74,28 @@ class Game extends Component {
       switch (event.type) {
         case 'account_balance_changed':
           store.dispatch(changeAccountBalance(event.player, event.payload.after));
+          store.dispatch(addEvent(event));
           break;
 
         case 'player_position_changed':
           store.dispatch(changePawnPosition(event.player, event.payload.after));
+          store.dispatch(addEvent(event));
           break;
 
         case 'player_bought_street':
           store.dispatch(playerBoughtAStreet(event.player, event.payload.after));
+          store.dispatch(addEvent(event));
           break;
 
         case 'game_status_changed':
           store.dispatch(changeGameStatus(event.payload.after));
+          store.dispatch(addEvent(event));
           break;
 
         case 'player_ready_changed':
           store.dispatch(changePlayerReadyStatus(event.player));
-          break;
+          store.dispatch(addEvent(event));
+          break
 
         default:
           store.dispatch(addEvent(event));
