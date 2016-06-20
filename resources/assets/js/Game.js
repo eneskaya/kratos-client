@@ -3,8 +3,6 @@ import PlayersList from './components/PlayersList';
 import EventsList from './components/EventsList';
 import PlayBar from './components/PlayBar';
 import AccountCircle from 'material-ui/svg-icons/action/account-circle';
-import {grey800, greenA200} from 'material-ui/styles/colors';
-
 
 import store from './flux/store';
 
@@ -43,39 +41,6 @@ class Game extends Component {
 
         });
     });
-
-    const e =   {
-        id: "/events/5jpq21ujhrd1ibo66g3osdi7f5",
-        name: "test event",
-        game: "testspiel01",
-        type: "test_event",
-        reason: "Because fuck you that's why",
-        resource: "dasdasd",
-        player: "enes",
-        submitted: true,
-        time: "2016-06-20 01:06:15",
-        valid: true,
-        payload: {
-          before: 'enes',
-          after: 'blabla'
-        }
-      };
-
-    const e2 =   {
-        id: "/events/5jpq21ujhrd1ibo66g3osdi7f6",
-        name: "test event",
-        game: "testspiel01",
-        type: "test_event",
-        reason: "Because fuck you that's why",
-        resource: "dasdasd",
-        player: "enes",
-        submitted: true,
-        time: "2016-06-20 09:06:15",
-        valid: true,
-      };
-
-    store.dispatch(addEvent(e));
-    store.dispatch(addEvent(e2));
 
     let socket = io(env);
 
@@ -137,8 +102,13 @@ class Game extends Component {
     return (
       <div className="container-fluid" style={{ marginTop: 10 }}>
         <div className="row">
-          <div className="col-sm-8">
-            <h4>Game: {this.props.params.gameId} <span className="badge badge-primary">{this.state.status}</span></h4>
+          <div className="col-sm-6 text-center">
+            <h4>Player: {localStorage.getItem('user')}</h4>
+
+          </div>
+
+          <div className="col-sm-6 text-center">
+            <h4>Game: {this.props.params.gameId} {this.gameLabel()}</h4>
             <small className="text-muted">You are {localStorage.getItem('user')}</small>
           </div>
         </div>
@@ -156,6 +126,26 @@ class Game extends Component {
         </div>
       </div>
     );
+  }
+
+  gameLabel() {
+
+    if (this.state.status === 'running') {
+      return (
+        <span className="label label-success">running</span>
+      );
+    }
+
+    if (this.state.status === 'registration') {
+      return (
+        <span className="label label-danger">registration</span>
+      );
+    }
+
+    return (
+        <span className="label label-primary">{this.state.status}</span>
+    );
+
   }
 
   componentWillUnmount() {

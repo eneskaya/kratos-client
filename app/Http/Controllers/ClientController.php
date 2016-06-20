@@ -18,8 +18,6 @@ class ClientController extends Controller
             'game'      => 'required'
         ]);
 
-        return response($request->all(), 200);
-
         $initialData = collect(Cache::get('initialdata'));
 
         $players = $initialData->get('users');
@@ -50,10 +48,5 @@ class ClientController extends Controller
         event(new NewEventHasBeenAdded($event));
 
         return response(["success" => true], 200);
-    }
-
-    public function announceUserEvent(Request $request)
-    {
-
     }
 }

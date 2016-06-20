@@ -16,7 +16,9 @@ class StartController extends Controller
 
     public function __construct()
     {
-        $this->client = new Client();
+        $this->client = new Client([
+            'timeout' => 2.0
+        ]);
     }
 
     public function start()
@@ -26,31 +28,38 @@ class StartController extends Controller
 
     public function getInitialData()
     {
-        
-        return [
-            'games' => [
-              '/games/testspielxy02'
-            ],
-            'users' => [
-                '/users/finn',
-                '/users/enes',
-                '/users/jakob',
-                '/users/niko'
-            ]
-        ];
-        
         $games = collect($this->getOpenGames());
         $users = collect($this->getUsers());
         $events = collect($this->getEvents());
 
         $response = collect([
             "games" => $games,
-            "users" => $users,
             "events" => $events
         ]);
 
-        Cache::put('initialdata', $response, 5);
-        
+        $detailedUsers = collect();
+
+        foreach ($users as $user) {
+            $detailedUsers->push($this->getUserDetails($user));
+        }
+
+        $response->put('users', $detailedUsers);
+
+        Cache::put('initialdata', $response, 1);
+
+        return $response;
+    }
+
+    private function getUserDetails($userId)
+    {
+        $baseUserServiceURL = Cache::get('KRATOSUserService');
+        $client = new Client([
+            'base_uri' => $baseUserServiceURL
+        ]);
+
+        $req = $client->request('GET', $userId);
+        $response = \GuzzleHttp\json_decode($req->getBody()->getContents(), true);
+
         return $response;
     }
 
@@ -71,23 +80,19 @@ class StartController extends Controller
 
     private function getDataForService($service)
     {
-        if (Cache::has($service)) {
-            $uri = Cache::get($service);
+        $uri = Cache::get($service);
 
-            $res = $this->client->request('GET', $uri, [
-                'headers' => [
-                    'Content-Type' => 'application/json'
-                ]
-            ]);
+        $res = $this->client->request('GET', $uri, [
+            'headers' => [
+                'Content-Type' => 'application/json'
+            ]
+        ]);
 
-            if ($res->getStatusCode() === 200) {
-                return json_decode($res->getBody()->getContents(), true);
-            }
-
-            throw new BadResponseException('Could not connect to server', $res);
+        if ($res->getStatusCode() === 200) {
+            return json_decode($res->getBody()->getContents(), true);
         }
 
-        return [];
+        throw new BadResponseException('Could not connect to server', $res);
     }
 
 }

@@ -69,7 +69,7 @@ class Start extends Component {
       if (response.status === 200) {
 
         response.json().then( (data) => {
-          localStorage.setItem('user', data.player);
+          localStorage.setItem('user', data.player.name);
           localStorage.setItem('game', data.game);
           hashHistory.push('/play' + data.game);
         });
@@ -102,7 +102,7 @@ class Start extends Component {
               <SelectField value={this.state.selectedUser} onChange={this.handleUserSelect.bind(this)}>
                 { this.state.users.map( function(user) {
                   return (
-                    <MenuItem key={user} value={user} primaryText={user} />
+                    <MenuItem key={user.id} value={user} primaryText={user.name} />
                   );
                 }) }
               </SelectField>

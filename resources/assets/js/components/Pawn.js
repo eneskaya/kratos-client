@@ -38,7 +38,7 @@ Pawn.propTypes = {
   playerName: React.PropTypes.string.isRequired,
   turn: React.PropTypes.bool.isRequired,
   ready: React.PropTypes.bool.isRequired,
-  balance: React.PropTypes.string.isRequired
+  balance: React.PropTypes.number.isRequired
 }
 
 export default Pawn;
