@@ -125,7 +125,7 @@ function gameApp(state = initialState, action) {
 
     case Actions.PLAYER_POSITION_CHANGED:
       return Object.assign({}, state, {
-        players: changePosition(state.players, action.player, action.position)
+        players: changePosition(state.players, action.player, action.newPosition)
       });
 
     case Actions.EVENT_ADDED:
