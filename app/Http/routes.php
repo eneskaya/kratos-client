@@ -16,6 +16,7 @@ Route::get('initial', 'StartController@getInitialData');
 
 Route::group([ 'prefix' => 'games' ], function () {
     Route::get('{gameId}', 'GameController@getGame');
+    Route::get('player/{player}/game/{game}/move', 'GameController@makeMove');
 });
 
 Route::group([ 'prefix' => 'client' ], function () {

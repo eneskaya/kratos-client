@@ -64,7 +64,6 @@ class Game extends Component {
 
     // id of the current game
     let game = this.state.name;
-    console.log(game);
 
     // id of the current player
     let player = localStorage.getItem('user');
@@ -95,7 +94,13 @@ class Game extends Component {
         case 'player_ready_changed':
           store.dispatch(changePlayerReadyStatus(event.player));
           store.dispatch(addEvent(event));
-          break
+          break;
+
+        case 'player_is_broke':
+          break;
+
+        case 'game_has_finished':
+          break;
 
         default:
           store.dispatch(addEvent(event));
@@ -110,8 +115,8 @@ class Game extends Component {
       <div className="container-fluid" style={{ marginTop: 10 }}>
         <div className="row">
           <div className="col-sm-6 text-center">
-            <h4>Player: {localStorage.getItem('user')}</h4>
-
+            <h4>Player: {this.getLoggedInUsersObject().name}</h4>
+            <small className="text-muted">{this.getLoggedInUsersObject().position}</small>
           </div>
 
           <div className="col-sm-6 text-center">
@@ -129,10 +134,26 @@ class Game extends Component {
           </div>
         </div>
         <div>
-          <PlayBar />
+          <PlayBar
+            currentPlayer={this.state.currentPlayer}
+            player={localStorage.getItem('user')}
+            game={localStorage.getItem('game')} />
         </div>
       </div>
     );
+  }
+
+  getLoggedInUsersObject() {
+
+    const loggedIn = localStorage.getItem('user');
+
+    this.state.players.forEach( (player) => {
+      if (player.name === loggedIn) {
+        return player;
+      }
+    });
+
+    return {};
   }
 
   gameLabel() {

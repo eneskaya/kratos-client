@@ -29,7 +29,7 @@ class Event extends Component {
       <Card style={{ marginBottom: 10 }}>
         <CardHeader
           title={this.props.name}
-          subtitle={moment(this.state.time).fromNow() + ' <i>at</i> ' + moment(this.state.time).format('HH:mm:ss')}
+          subtitle={moment(this.state.time).fromNow() + ' at ' +  moment(this.state.time).format('HH:mm:ss')}
           actAsExpander={true}
           showExpandableButton={true}
         />

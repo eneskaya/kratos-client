@@ -7,7 +7,8 @@ export const initialState = {
   services: [],
   name: 'none',
   ownedStreets: [],
-  events: []
+  events: [],
+  currentPlayer: ''
 };
 
 /**************[HELPER FUNCTIONS]**************/
@@ -113,7 +114,8 @@ function gameApp(state = initialState, action) {
 
     case Actions.TURN_CHANGED:
       return Object.assign({}, state, {
-        players: changeTurn(state.players, action.player)
+        players: changeTurn(state.players, action.player),
+        currentPlayer: action.player
       });
 
     case Actions.ACCOUNT_BALANCE_CHANGED:

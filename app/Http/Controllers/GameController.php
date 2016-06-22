@@ -63,4 +63,22 @@ class GameController extends Controller
 
         return $data[0]['position'];
     }
+
+    public function makeMove($player, $game)
+    {
+        $gameService = Cache::get('KRATOSGameService');
+        $boardService = Cache::get('KRATOSBoardService');
+
+        // TODO check if everything went OK
+        $success = false;
+
+        // 1. Take the turn from GameService
+        $this->client->request('PUT', "$gameService/$game/players/turn?player=$player");
+        // 2. Make the move for the player and game on BoardService
+        $this->client->request('POST', "$boardService/$game/pawns/$player/roll");
+        // 3. Delete Turn from GameService, which hands the turn to the next player
+        $this->client->request('DELETE', "$gameService/$game/turn");
+
+        return [ 'success' => true ];
+    }
 }
