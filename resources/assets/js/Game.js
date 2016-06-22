@@ -120,8 +120,6 @@ class Game extends Component {
       <div className="container-fluid" style={{ marginTop: 10 }}>
         <div className="row">
           <div className="col-sm-6 text-center">
-            <h4>Player: {this.getLoggedInUsersObject().name}</h4>
-            <small className="text-muted">{this.getLoggedInUsersObject().position}</small>
           </div>
 
           <div className="col-sm-6 text-center">
