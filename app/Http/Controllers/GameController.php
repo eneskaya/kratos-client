@@ -77,7 +77,7 @@ class GameController extends Controller
         // 2. Make the move for the player and game on BoardService
         $this->client->request('POST', "$boardService/$game/pawns/$player/roll");
         // 3. Delete Turn from GameService, which hands the turn to the next player
-        $this->client->request('DELETE', "$gameService/$game/turn");
+        $this->client->request('DELETE', "$gameService/$game/players/turn");
 
         return [ 'success' => true ];
     }
