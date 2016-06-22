@@ -96,6 +96,11 @@ class Game extends Component {
           store.dispatch(addEvent(event));
           break;
 
+        case 'turn_changed':
+          store.dispatch(changeTurn(event.player));
+          store.dispatch(addEvent(event));
+          break;
+
         case 'player_is_broke':
           break;
 
