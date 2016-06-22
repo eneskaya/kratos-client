@@ -142,7 +142,7 @@ class Game extends Component {
           <PlayBar
             currentPlayer={this.state.currentPlayer}
             player={localStorage.getItem('user')}
-            game={localStorage.getItem('game')} />
+            game={this.props.params.gameId} />
         </div>
       </div>
     );
